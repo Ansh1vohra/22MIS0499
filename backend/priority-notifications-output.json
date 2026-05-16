@@ -1,0 +1,86 @@
+{
+  "generatedAt": "2026-05-16T10:35:50.683Z",
+  "count": 10,
+  "topNotifications": [
+    {
+      "ID": "f82d4097-845f-4ec6-986f-1b1cc92b54fe",
+      "Type": "Placement",
+      "Message": "Meta Platforms Inc. hiring",
+      "Timestamp": "2026-05-16 09:32:33",
+      "PriorityScore": 3001778923953000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "617a93e5-a498-4b09-b420-7c69ed740046",
+      "Type": "Placement",
+      "Message": "Apple Inc. hiring",
+      "Timestamp": "2026-05-16 07:34:23",
+      "PriorityScore": 3001778916863000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "f86c43b4-1de3-4207-8db7-6ff6f682a5d3",
+      "Type": "Placement",
+      "Message": "Broadcom Inc. hiring",
+      "Timestamp": "2026-05-16 06:34:45",
+      "PriorityScore": 3001778913285000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "43d15e6d-076f-48e2-986c-9c209d9b51a2",
+      "Type": "Placement",
+      "Message": "Alphabet Inc. Class A hiring",
+      "Timestamp": "2026-05-16 06:02:44",
+      "PriorityScore": 3001778911364000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "4538adfe-96fd-4608-b7d1-d06e7842027c",
+      "Type": "Placement",
+      "Message": "Marriott International Inc. hiring",
+      "Timestamp": "2026-05-16 03:35:18",
+      "PriorityScore": 3001778902518000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "19856881-6002-443c-a2bc-0385437913b5",
+      "Type": "Placement",
+      "Message": "Marriott International Inc. hiring",
+      "Timestamp": "2026-05-16 01:34:12",
+      "PriorityScore": 3001778895252000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "26c7f5a6-87fe-475d-aa84-e4f18696ff5f",
+      "Type": "Placement",
+      "Message": "Nvidia Corporation hiring",
+      "Timestamp": "2026-05-16 00:04:56",
+      "PriorityScore": 3001778889896000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "87126ba8-af29-4242-8b14-97efb0d4fdf2",
+      "Type": "Placement",
+      "Message": "Berkshire Hathaway Inc. hiring",
+      "Timestamp": "2026-05-15 15:33:28",
+      "PriorityScore": 3001778859208000,
+      "TypeWeight": 3
+    },
+    {
+      "ID": "63e818b3-85cf-4aa0-877a-10a60bdb3b0d",
+      "Type": "Result",
+      "Message": "mid-sem",
+      "Timestamp": "2026-05-16 10:03:50",
+      "PriorityScore": 2001778925830000,
+      "TypeWeight": 2
+    },
+    {
+      "ID": "b07ddfd4-7783-40fb-bc6e-b55132a50e27",
+      "Type": "Result",
+      "Message": "project-review",
+      "Timestamp": "2026-05-16 00:04:34",
+      "PriorityScore": 2001778889874000,
+      "TypeWeight": 2
+    }
+  ]
+}

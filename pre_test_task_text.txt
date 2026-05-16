@@ -1,0 +1,200 @@
+AFFORDMED®
+
+Technology, Innovation & Affordability
+
+Campus Hiring Evaluation - Pre-Test Setup
+Terms & Conditions
+This document and the associated assessment contain confidential and proprietary information of Afford Medical Technologies Private Limited (hereinafter "Affordmed"). By accessing this material or participating in this assessment, you acknowledge receipt of this information for the sole purpose of evaluating your candidacy for an internship, contract, or employment with Affordmed. You hereby agree to the following:
+
+- Confidentiality: You shall maintain the strict confidentiality of all information received and refrain from sharing, distributing, or disclosing any part of the information to any third party.
+
+- Non-Tampering: You shall not tamper with, disrupt, or attempt to compromise any Affordmed or its vendor’s cloud or software resources provided for this assessment.
+
+- Sole Use: You shall use this material solely for the purpose stated herein and for no other purpose whatsoever.
+Any unauthorised use, disclosure, or tampering will result in immediate disqualification from the candidacy process and may subject you to legal action. You consent to the exclusive jurisdiction of the Courts of Hyderabad/Secunderabad for any legal disputes arising from this agreement. Any reference to third parties within this document is purely coincidental and for illustrative purposes only, and does not constitute any endorsement or affiliation.
+Submission Guidelines
+
+- Create a Public Repository on your Github Account with your Roll Number as the Repository Name
+
+- For Full Stack track, create the following inside the repository
+
+- logging_middleware folder
+
+- notification_system_design.md (as markdown file)
+
+- notification_app_be folder
+
+- notification_app_fe folder
+
+- .gitignore (add node_modules if js/ts is used)
+
+- For Backend track, create the following inside the repository
+
+- logging_middleware folder
+
+- vehicle_maintence_scheduler folder
+
+- notification_system_design.md (as markdown file)
+
+- notification_app_be folder
+
+- .gitignore (add node_modules if js/ts is used)
+
+- For Frontend tracks, create the following inside the repository
+
+- logging_middleware folder
+
+- notification_system_design.md (as markdown file)
+
+- notification_app_be folder
+
+- notification_app_fe folder
+
+- .gitignore (add node_modules if js/ts is used)
+
+- Ensure that your Name, or any mention of Affordmed, is entirely absent from the Repository Name, the README file, and all commit messages.
+
+- For each question, submit comprehensive solutions. This includes your architecture design, complete code and clear output screenshots. Incomplete submissions will not be considered for evaluation.
+
+- We strongly encourage you to commit and push your code to GitHub regularly, at logical milestones in your development process.
+
+- Please adhere to production-grade coding standards. This includes employing proper naming conventions, maintaining a well-organised folder structure, and providing appropriate comments within your code to enhance readability. This is only an indicative list and you are encouraged to demonstrate other best practices that you are aware of.
+
+- For Backend Track or the Backend question of Full Stack Track, select any Backend Framework without utilising external libraries for algorithms. Capture output screenshots from API clients like Insomnia or Postman, displaying request body, response and response time for the problem. The output screenshots have to be taken of API calls to your app and not the test server
+
+- For Frontend Track or the Frontend question of Full Stack Track, it is mandatory to use React or Next. While JavaScript is permitted, the use of TypeScript is preferred. Capture output screenshots of both mobile and desktop views of your web application. For styling, only Material UI or Vanilla CSS are permitted.
+
+- Any instance of plagiarism, including using another applicant's API credentials, LLMs will lead to immediate rejection.
+Registration
+You need to register with our Test Server to obtain your unique Client ID and Client Secret.
+Requirements:
+
+- Your Roll Number and Email, must align with your university/college email and roll number. (Email must support Google Form verified submission)
+
+- The GitHub Repository link you submit in the Google Form will be matched against the GitHub Username provided during registration. Any mismatch will result in your submission being ignored. If your GitHub Profile link is https://github.com/username, submit only username while Registering.
+
+- The accessCode required for registration has been shared via the email you received. Do not use the example accessCode provided below.
+Registration API (POST)
+http://4.224.186.213/evaluation-service/register
+
+Request Body
+{
+"email": "ramkrishna@abc.edu",
+"name": "Ram Krishna",
+"mobileNo":"9999999999",
+"githubUsername": "github",
+"rollNo": "aa1bb",
+"accessCode": "xgAsNC"
+}
+
+ResponseYou can register only once. Do not forget to save your clientID and clientSecret; you cannot retrieve them again.
+{
+"email": "ramkrishna@abc.edu",
+"name": "ram krishna",
+"rollNo": "aa1bb",
+"accessCode": "xgAsNC",
+"clientID": "d9cbb699-6a27-44a5-8d59-8b1befa816da",
+"clientSecret": "tVJaaaRBSeXcRXeM"
+}
+
+Authentication
+After successful registration, you must obtain an Authorization Token to access the Test Server APIs.
+Authorization Token API (POST)
+http://4.224.186.213/evaluation-service/auth
+
+Request Body
+{
+"email": "ramkrishna@abc.edu",
+"name": "ram krishna",
+"rollNo": "aa1bb",
+"accessCode": "xgAsNC",
+"clientID": "d9cbb699-6a27-44a5-8d59-8b1befa816da",
+"clientSecret": "tVJaaaRBSeXcRXeM"
+}
+
+Response: (Status Code: 200)
+{
+"token_type": "Bearer",
+"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzQzNTc0MzQ0LCJpYXQiOjE3NDM1NzQwNDQsImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6ImQ5Y2JiNjk5LTZhMjctNDRhNS04ZDU5LThiMWJlZmE4MTZkYSIsInN1YiI6InJhbWtyaXNobmFAYWJjLmVkdSJ9LCJlbWFpbCI6InJhbWtyaXNobmFAYWJjLmVkdSIsIm5hbWUiOiJyYW0ga3Jpc2huYSIsInJvbGxObyI6ImFhMWJiIiwiYWNjZXNzQ29kZSI6InhnQXNOQyIsImNsaWVudElEIjoiZDljYmI2OTktNmEyNy00NGE1LThkNTktOGIxYmVmYTgxNmRhIiwiY2xpZW50U2VjcmV0IjoidFZKYWFhUkJTZVhjUlhlTSJ9.YApD98gq0IN_OWw7JMfmuUfK1m4hLTm7AIcLDcLAzVg",
+"expires_in": 1743574344
+}
+
+Develop Logging Middleware
+The 'Logging Middleware' is a critical component for building robust and observable applications. While error logging is essential, we expect you to implement logging that captures the entire lifecycle of significant events within your application – from successful operations to warnings, informational messages, and debugging details. Think of logs as the narrative of your application's execution! These logs are crucial for understanding application behavior, performance, and for effective debugging.
+Note: While you have flexibility in choosing your backend language/framework, the Logging Middleware must be a reusable package. If attempting the Full Stack track, both this middleware and your backend application must be developed in TypeScript/JavaScript to enable the logging package's consumption by the Frontend.
+Write a reusable function that makes an API call to the Test Server each time the function is called that matches the below structure:
+Log(stack,level,package,message)
+
+Integrate this reusable Log function strategically throughout your codebase. Each Log call should provide specific and descriptive context about what's happening. Instead of generic messages, aim for logs that clearly communicate the state, actions, and any relevant data at that point in the code.
+We encourage you to think critically about what information would be most valuable if you were to troubleshoot your application months from now. That's the information you should be logging!
+// If an error occurs in your application's handler due to a data type mismatch
+Log("backend", "error", "handler", "received string, expected bool")
+
+// If an error occurs in your application's db layer
+Log("backend", "fatal", "db", "Critical database connection failure.")
+
+The test server has the below API that you can call in your Logging Middleware
+Log API (POST)
+http://4.224.186.213/evaluation-service/logs
+
+Constraints
+
+- API is a protected Route
+
+- Stack, Level and Package Fields accept only the following values (in lower case only)
+Stack
+"backend"
+"frontend"
+
+Level
+"debug"
+"info"
+"warn"
+"error"
+"fatal"
+
+Package
+Packages that can only be used in Backend Application
+"cache"
+"controller"
+"cron_job"
+"db"
+"domain"
+"handler"
+"repository"
+"route"
+"service"
+
+Packages that can be only be used in Frontend Application
+"api"
+"component"
+"hook"
+"page"
+"state"
+"style"
+
+Packages that can be used in both Backend and Frontend Application
+"auth"
+"config"
+"middleware"
+"utils"
+
+Request Body
+{
+"stack":"backend",
+"level":"error",
+"package":"handler",
+"message":"received string, expected bool"
+}
+
+Response (Status Code: 200)
+{
+"logID": "a4aad02e-19d0-4153-86d9-58bf55d7c402",
+"message": "log created successfully"
+}
+
+Afford Medical Technologies Private Limited
+
+B 230 2nd Main Road, Sainikpuri, Hyderabad-500094, Telangana, INDIA. Phone: 91-40-27117068/27116133,
+Web: www.affordmed.com, E-mail: contact@affordmed.com, CIN: U72200TG2007PTC056067, URN: UDYAM-TS-20-0013532
+
