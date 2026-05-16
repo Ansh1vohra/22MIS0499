@@ -9,7 +9,7 @@ const TYPE_WEIGHTS = {
 };
 
 function getAuthToken() {
-  return process.env.AFFORDMED_ACCESS_TOKEN || process.env.LOG_AUTH_TOKEN;
+  return process.env.AFFORDMED_TOKEN;
 }
 
 function parseTimestamp(timestamp) {
@@ -21,7 +21,6 @@ function getPriorityScore(notification) {
   const timestamp = parseTimestamp(notification.Timestamp);
   return typeWeight * 1_000_000_000_000_000 + timestamp.getTime();
 }
-
 export async function fetchNotificationsFromRemote(params = {}) {
   const token = getAuthToken();
   const url = new URL(`${REMOTE_API_BASE}/notifications`);

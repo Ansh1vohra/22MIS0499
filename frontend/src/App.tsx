@@ -66,18 +66,14 @@ const TYPE_WEIGHTS: Record<NotificationType, number> = {
 const theme = createTheme({
   palette: {
     mode: 'light',
-    primary: {
-      main: '#d97706', // Amber/Orange 600
-    },
-    secondary: {
-      main: '#f59e0b', // Amber 500
-    },
+    primary: { main: '#d97706' },
+    secondary: { main: '#f59e0b' },
     background: {
-      default: '#fffaf5', // Very light warm background
+      default: '#fffaf5',
       paper: '#ffffff',
     },
     text: {
-      primary: '#451a03', // Deep brown/orange text
+      primary: '#451a03',
       secondary: '#78350f',
     },
   },
@@ -88,14 +84,13 @@ const theme = createTheme({
     fontFamily:
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     h1: {
-      fontSize: '1.25rem', // Reduced from 1.75rem
+      fontSize: '1.25rem',
       fontWeight: 800,
       letterSpacing: '-0.025em',
     },
     h2: {
-      fontSize: '1.1rem', // Reduced from 1.25rem
+      fontSize: '1.1rem',
       fontWeight: 700,
-      letterSpacing: 0,
     },
     button: {
       textTransform: 'none',
@@ -235,12 +230,10 @@ function App() {
   }, [page, pageSize, typeFilter, viewMode])
 
   useEffect(() => {
-    void fetchNotifications()
-    // Small delay ensures the DOM has updated before scrolling
+    fetchNotifications()
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
-    }, 100)
+    }, 50)
   }, [fetchNotifications])
 
   const updateViewedIds = useCallback((nextIds: Set<string>) => {
