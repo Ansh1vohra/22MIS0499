@@ -52,10 +52,10 @@ type NotificationResponse = {
   notifications: NotificationItem[]
 }
 
-const API_URL = 'http://4.224.186.213/evaluation-service/notifications'
+const API_URL = '/api/notifications'
 const VIEWED_STORAGE_KEY = 'campus-notification-viewed-ids'
 const TYPE_FILTERS: TypeFilter[] = ['All', 'Placement', 'Result', 'Event']
-const PAGE_SIZES = [10, 20, 50]
+const PAGE_SIZES = [10]
 const PRIORITY_LIMITS = [10, 15, 20]
 const TYPE_WEIGHTS: Record<NotificationType, number> = {
   Placement: 3,
@@ -67,18 +67,18 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1d4ed8',
+      main: '#d97706', // Amber/Orange 600
     },
     secondary: {
-      main: '#0f766e',
+      main: '#f59e0b', // Amber 500
     },
     background: {
-      default: '#f6f7f9',
+      default: '#fffaf5', // Very light warm background
       paper: '#ffffff',
     },
     text: {
-      primary: '#111827',
-      secondary: '#5b6472',
+      primary: '#451a03', // Deep brown/orange text
+      secondary: '#78350f',
     },
   },
   shape: {
@@ -88,12 +88,12 @@ const theme = createTheme({
     fontFamily:
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     h1: {
-      fontSize: '1.75rem',
-      fontWeight: 700,
-      letterSpacing: 0,
+      fontSize: '1.25rem', // Reduced from 1.75rem
+      fontWeight: 800,
+      letterSpacing: '-0.025em',
     },
     h2: {
-      fontSize: '1.25rem',
+      fontSize: '1.1rem', // Reduced from 1.25rem
       fontWeight: 700,
       letterSpacing: 0,
     },
@@ -104,22 +104,12 @@ const theme = createTheme({
   },
 })
 
-function getToken() {
-  return import.meta.env.VITE_AFFORDMED_ACCESS_TOKEN || import.meta.env.VITE_LOG_AUTH_TOKEN
-}
 
 async function logFrontend(level: 'debug' | 'info' | 'warn' | 'error', packageName: string, message: string) {
-  const token = getToken()
-
-  if (!token) {
-    return
-  }
-
   try {
-    await fetch('http://4.224.186.213/evaluation-service/logs', {
+    await fetch('/api/logs', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -182,7 +172,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(20)
+  const [pageSize, setPageSize] = useState(10)
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('All')
   const [priorityTypeFilter, setPriorityTypeFilter] = useState<TypeFilter>('All')
   const [priorityLimit, setPriorityLimit] = useState(10)
@@ -201,34 +191,27 @@ function App() {
   }, [notifications, priorityLimit, priorityTypeFilter])
 
   const fetchNotifications = useCallback(async () => {
-    const token = getToken()
-
-    if (!token) {
-      setError('Missing VITE_AFFORDMED_ACCESS_TOKEN in frontend/.env')
-      return
-    }
-
     setLoading(true)
     setError('')
-
-    const params = new URLSearchParams({
-      limit: String(pageSize),
-      page: String(page),
-    })
-
-    if (typeFilter !== 'All') {
-      params.set('notification_type', typeFilter)
-    }
 
     try {
       await logFrontend('info', 'api', 'fetching notifications')
 
-      const response = await fetch(`${API_URL}?${params.toString()}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-        },
+      const params = new URLSearchParams({
+        limit: String(pageSize),
+        page: String(page),
       })
+
+      if (typeFilter !== 'All') {
+        params.set('notification_type', typeFilter)
+      }
+
+      // If we are in priority mode, tell the backend to sort for us
+      if (viewMode === 'priority') {
+        params.set('priority', 'true')
+      }
+
+      const response = await fetch(`${API_URL}?${params.toString()}`)
 
       if (!response.ok) {
         throw new Error(`Notification API returned ${response.status}`)
@@ -249,10 +232,15 @@ function App() {
     } finally {
       setLoading(false)
     }
-  }, [page, pageSize, typeFilter])
+  }, [page, pageSize, typeFilter, viewMode])
 
   useEffect(() => {
     void fetchNotifications()
+    // Small delay ensures the DOM has updated before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 100)
   }, [fetchNotifications])
 
   const updateViewedIds = useCallback((nextIds: Set<string>) => {
@@ -292,7 +280,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-        <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: '1px solid #dfe3ea' }}>
+        <AppBar position="sticky" color="inherit" elevation={0} sx={{ borderBottom: '1px solid #ffedd5' }}>
           <Toolbar sx={{ gap: 2, justifyContent: 'space-between' }}>
             <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
               <NotificationsActiveIcon color="primary" />
@@ -317,7 +305,7 @@ function App() {
         {loading && <LinearProgress />}
 
         <Container maxWidth="lg" sx={{ py: { xs: 2, md: 3 } }}>
-          <Paper elevation={0} sx={{ border: '1px solid #dfe3ea', overflow: 'hidden' }}>
+          <Paper elevation={0} sx={{ border: '1px solid #ffedd5', overflow: 'hidden' }}>
             <Stack
               direction={{ xs: 'column', md: 'row' }}
               spacing={2}
@@ -341,7 +329,7 @@ function App() {
                         ))}
                       </Select>
                     </FormControl>
-                    <FormControl size="small" sx={{ minWidth: 130 }}>
+                    <FormControl size="small" sx={{ minWidth: 100 }}>
                       <InputLabel id="page-size-label">Limit</InputLabel>
                       <Select
                         labelId="page-size-label"
@@ -359,6 +347,28 @@ function App() {
                         ))}
                       </Select>
                     </FormControl>
+                    <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', sm: 'block' } }} />
+                    <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
+                      <Button
+                        size="small"
+                        disabled={page === 1 || loading}
+                        onClick={() => setPage((v) => Math.max(1, v - 1))}
+                        sx={{ minWidth: 40 }}
+                      >
+                        Prev
+                      </Button>
+                      <Typography variant="caption" sx={{ fontWeight: 700, minWidth: 45, textAlign: 'center' }}>
+                        {page}
+                      </Typography>
+                      <Button
+                        size="small"
+                        disabled={loading || notifications.length < pageSize}
+                        onClick={() => setPage((v) => v + 1)}
+                        sx={{ minWidth: 40 }}
+                      >
+                        Next
+                      </Button>
+                    </Stack>
                   </>
                 ) : (
                   <>
@@ -473,8 +483,8 @@ function NotificationList({
                 </Button>
               }
               sx={{
-                bgcolor: viewed ? 'background.paper' : '#eef5ff',
-                borderLeft: viewed ? '4px solid transparent' : '4px solid #1d4ed8',
+                bgcolor: viewed ? 'background.paper' : '#fff7ed',
+                borderLeft: viewed ? '4px solid transparent' : '4px solid #d97706',
               }}
             >
               <ListItemButton onClick={() => onMarkViewed(notification.ID)} sx={{ pr: { xs: 14, sm: 18 }, py: 1.5 }}>
